@@ -8,7 +8,6 @@ from nltk.stem import PorterStemmer
 import pandas as pd
 import numpy as np
 
-
 # Define the class of custom Naive Bayes classifier
 class NaiveBayesClassifier:
     def __init__(self, laplace=1):
@@ -70,13 +69,16 @@ for i in range(0, len(dataset)):
     corpus.append(' '.join(review))
 
 # Feature extraction using TF-IDF
-tfidf = TfidfVectorizer(max_features = 1500)
+tfidf = TfidfVectorizer(max_features = 900)
 X = tfidf.fit_transform(corpus).toarray()
 y = dataset.iloc[:, -1].values
 
+# fix a seed to make the constant result
+SEED = 215
+
 # Split dataset into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2,
-                                                    random_state=215)
+                                                    random_state=SEED)
 
 # Training using Multinomial Naive Bayes classifier,
 # which includes log-likelihood and Laplace smoothing by default
